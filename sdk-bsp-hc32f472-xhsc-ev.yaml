@@ -1,0 +1,104 @@
+board:
+  buy_url_cn: N/A
+  buy_url_global: N/A
+  debug_interface: SWD
+  debugger: DAP-LINK
+  description_en: EV_F472_LQ100 is an evaluation board officially launched by XHSC,
+    equipped with the HC32F472PETI mcu, based on the ARM Cortex-M4 core with a maximum
+    frequency of 120MHz. It supports Jlink and DAP-LINK debugging and is equipped
+    with a wealth of onboard resources that can give full play to the performance
+    of the HC32F472PETI chip.
+  description_zh: EV_F472_LQ100是XHSC官方推出的搭载HC32F472PETI芯片的评估板，基于ARM CortexM4内核，最高主频120MHz，支持Jlink和DAP-LINK调试，板载资源丰富，可以充分发挥出H32F472PETI芯片的性能
+  emulator_machine: ''
+  large_image: documents/images/EV_F472_LQ100_Rev1.0.png
+  name: HC32F472-XHSC-EV
+  price_cn: N/A CNY
+  price_global: N/A USD
+  sale_contact_cn: N/A
+  sale_contact_global: N/A
+  small_image: documents/images/EV_F472_LQ100_Rev1.0_small.png
+  vendor: XHSC
+  version: 1.0.0
+chip:
+  chip_name: HC32F472PETI
+  clock_source: XTAL
+  device_vendor: XHSC
+  family_name: HC32
+  rx_name: PF2
+  series_name: HC32F4
+  source_freq: '12000000'
+  sub_series_name: HC32F472
+  target_freq: '120000000'
+  tx_name: PC13
+  uart_name: UART2
+docs: []
+example_projects: []
+features:
+- max 120MHz
+- 512KByte dual bankFlash
+- 64KByte SRAM
+- 4KByte SRAM with power-down retention.
+- Three low-power modes,  include sleep, stop, power down. And the lowest power consumption
+  of 1.7uA.
+- DCU,MAU,FMAC
+- Supports peripheral event triggering
+- VREF,ADC,DAC,PGA,CMP,OTS
+- up to 23 Timer, one RTC, two WDT
+- up to 19 communication interfaces (USART *6, SPI*4, I2C*3, QSPI*1, CAN*3, USB2.0*1, MDIO *1)
+- upport extend SRAM
+- AES/HASH.TRNG
+features_zh:
+- '主频最大120MHz '
+- 512KByte双Bank Flash
+- 64KByte SRAM
+- 4KByte掉电保持SRAM
+- 三种低功耗模式，sleep，stop，power down，最低功耗1.7uA
+- 多个数据处理单元，DCU,MAU,FMAC
+- 支持外设事件相互触发
+- 高性能模拟，VREF,ADC,DAC,PGA,CMP,OTS
+- 多达23个timer，一个RTC，2个看门狗
+- 最大19个通信接口(6个USART,4个SPI, 3个I2C, 1个 QSPI, 3个CAN, 一个USBFS, 一个MDIO)
+- 外部存储扩展器EXMC，支持SRAM
+- 数据加密，AES/HASH.TRNG
+pkg_type: Board_Support_Packages
+pkg_vendor: XHSC
+pkg_version: 1.0.0
+template_projects:
+- builtin_files:
+  - files_and_folders:
+    - .config
+    - .cproject
+    - .gitignore
+    - .project
+    - .settings
+    - applications
+    - board
+    - cconfig.h
+    - figures
+    - Kconfig
+    - libraries
+    - platform
+    - makefile.targets
+    - project.ewd
+    - project.ewp
+    - project.eww
+    - project.uvoptx
+    - project.uvprojx
+    - README.md
+    - rt-thread
+    - rtconfig.h
+    - rtconfig.py
+    - rtconfig_preinc.h
+    - SConscript
+    - SConstruct
+    - template.ewp
+    - template.eww
+    - template.uvoptx
+    - template.uvprojx
+    source_path_offset: project_0
+    target_path_offset: ''
+  external_files: []
+  project_description: ''
+  project_name: hc32f472_template
+  project_type: rt-thread|@full|@4.0.2
+yaml_version: 3

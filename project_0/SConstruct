@@ -8,7 +8,7 @@ else:
     RTT_ROOT = os.path.normpath(os.getcwd() + '/../../..')
 
 # set RTT_ROOT
-if not os.getenv("RTT_ROOT"):
+if not os.getenv("RTT_ROOT"): 
     RTT_ROOT="rt-thread"
 
 sys.path = sys.path + [os.path.join(RTT_ROOT, 'tools')]
@@ -18,6 +18,25 @@ except:
     print('Cannot found RT-Thread root directory, please check RTT_ROOT')
     print(RTT_ROOT)
     exit(-1)
+
+def bsp_pkg_check():
+    import subprocess
+
+    check_paths = [
+        os.path.join("packages", "hc32-f4-cmsis-latest"),
+        os.path.join("packages", "hc32-f4-series-latest")
+    ]
+
+    need_update = not all(os.path.exists(p) for p in check_paths)
+
+    if need_update:
+        print("\n===============================================================================")
+        print("Dependency packages missing, please running 'pkgs --update'...")
+        print("If no packages are fetched, run 'pkgs --upgrade' first, then 'pkgs --update'...")
+        print("===============================================================================")
+        exit(1)
+
+RegisterPreBuildingAction(bsp_pkg_check)
 
 TARGET = 'rtthread.' + rtconfig.TARGET_EXT
 
@@ -51,22 +70,12 @@ Export('SDK_LIB')
 # prepare building environment
 objs = PrepareBuilding(env, RTT_ROOT, has_libcpu=False)
 
-hc32_library = 'hc32f472_ddl'
-rtconfig.BSP_LIBRARY_TYPE = hc32_library
-
-# include libraries
-objs.extend(SConscript(os.path.join(libraries_path_prefix, hc32_library, 'SConscript')))
+rtconfig.BSP_LIBRARY_TYPE = None
 
 # include drivers
 objs.extend(SConscript(os.path.join(libraries_path_prefix, 'hc32_drivers', 'SConscript')))
 
-# include platform
-if os.path.exists(SDK_ROOT + '/platform'):
-    platform_path_prefix = SDK_ROOT + '/platform'
-else:
-    platform_path_prefix = os.path.dirname(SDK_ROOT) + '/platform'
-
-objs.extend(SConscript(os.path.join(platform_path_prefix, 'SConscript')))
+# platform and tests are included via the root SConscript recursion
 
 # make a building
 DoBuilding(TARGET, objs)

@@ -62,7 +62,7 @@ features_zh:
 - 数据加密，AES/HASH.TRNG
 pkg_type: Board_Support_Packages
 pkg_vendor: XHSC
-pkg_version: 1.0.0
+pkg_version: 1.1.0
 template_projects:
 - builtin_files:
   - files_and_folders:
@@ -73,11 +73,11 @@ template_projects:
     - .settings
     - applications
     - board
-    - cconfig.h
     - figures
+    - jlink
     - Kconfig
-    - libraries
     - platform
+    - libraries
     - makefile.targets
     - project.ewd
     - project.ewp
@@ -100,5 +100,5 @@ template_projects:
   external_files: []
   project_description: ''
   project_name: hc32f472_template
-  project_type: rt-thread|@full|@4.0.2
+  project_type: rt-thread|@full|@5.3.0
 yaml_version: 3

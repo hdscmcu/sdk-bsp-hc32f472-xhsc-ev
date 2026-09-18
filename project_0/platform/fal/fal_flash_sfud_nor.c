@@ -11,33 +11,32 @@
 #include <fal.h>
 #include <sfud.h>
 #ifdef RT_USING_SFUD
-    #include <spi_flash_sfud.h>
+#include <dev_spi_flash_sfud.h>
 #endif
 
 #ifndef FAL_USING_NOR_FLASH_DEV_NAME
-    #define FAL_USING_NOR_FLASH_DEV_NAME        "w25q64"
+#define FAL_USING_NOR_FLASH_DEV_NAME "w25q64"
 #endif
 
-#define EXT_NOR_FLASH_START_ADDR        0
-#define EXT_NOR_FLASH_CHIP_SIZE         8 * 1024 * 1024
-#define EXT_NOR_FLASH_BLOCK_SIZE        4096
-#define EXT_NOR_FLASH_WR_MIN_GRAN       1
+#define EXT_NOR_FLASH_START_ADDR  0
+#define EXT_NOR_FLASH_CHIP_SIZE   8 * 1024 * 1024
+#define EXT_NOR_FLASH_BLOCK_SIZE  4096
+#define EXT_NOR_FLASH_WR_MIN_GRAN 1
 
 
 static int init(void);
-static int read(long offset, uint8_t *buf, size_t size);
-static int write(long offset, const uint8_t *buf, size_t size);
-static int erase(long offset, size_t size);
+static int read(long offset, rt_uint8_t *buf, rt_size_t size);
+static int write(long offset, const rt_uint8_t *buf, rt_size_t size);
+static int erase(long offset, rt_size_t size);
 
 
 static sfud_flash_t sfud_dev = NULL;
-struct fal_flash_dev ext_nor_flash0 =
-{
-    .name       = FAL_USING_NOR_FLASH_DEV_NAME,
-    .addr       = EXT_NOR_FLASH_START_ADDR,
-    .len        = EXT_NOR_FLASH_CHIP_SIZE,
-    .blk_size   = EXT_NOR_FLASH_BLOCK_SIZE,
-    .ops        = {init, read, write, erase},
+struct fal_flash_dev ext_nor_flash0 = {
+    .name = FAL_USING_NOR_FLASH_DEV_NAME,
+    .addr = EXT_NOR_FLASH_START_ADDR,
+    .len = EXT_NOR_FLASH_CHIP_SIZE,
+    .blk_size = EXT_NOR_FLASH_BLOCK_SIZE,
+    .ops = { init, read, write, erase },
     .write_gran = EXT_NOR_FLASH_WR_MIN_GRAN,
 };
 
@@ -52,24 +51,24 @@ static int init(void)
     }
     /* update the flash chip information */
     ext_nor_flash0.blk_size = sfud_dev->chip.erase_gran;
-    ext_nor_flash0.len      = sfud_dev->chip.capacity;
+    ext_nor_flash0.len = sfud_dev->chip.capacity;
 
     return 0;
 }
 
-static int read(long offset, uint8_t *buf, size_t size)
+static int read(long offset, rt_uint8_t *buf, rt_size_t size)
 {
-    assert(sfud_dev);
-    assert(sfud_dev->init_ok);
+    RT_ASSERT(sfud_dev);
+    RT_ASSERT(sfud_dev->init_ok);
     sfud_read(sfud_dev, ext_nor_flash0.addr + offset, size, buf);
 
     return size;
 }
 
-static int write(long offset, const uint8_t *buf, size_t size)
+static int write(long offset, const rt_uint8_t *buf, rt_size_t size)
 {
-    assert(sfud_dev);
-    assert(sfud_dev->init_ok);
+    RT_ASSERT(sfud_dev);
+    RT_ASSERT(sfud_dev->init_ok);
     if (sfud_write(sfud_dev, ext_nor_flash0.addr + offset, size, buf) != SFUD_SUCCESS)
     {
         return -1;
@@ -78,10 +77,10 @@ static int write(long offset, const uint8_t *buf, size_t size)
     return size;
 }
 
-static int erase(long offset, size_t size)
+static int erase(long offset, rt_size_t size)
 {
-    assert(sfud_dev);
-    assert(sfud_dev->init_ok);
+    RT_ASSERT(sfud_dev);
+    RT_ASSERT(sfud_dev->init_ok);
     if (sfud_erase(sfud_dev, ext_nor_flash0.addr + offset, size) != SFUD_SUCCESS)
     {
         return -1;
